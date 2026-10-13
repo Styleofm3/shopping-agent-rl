@@ -289,10 +289,10 @@ uv.lock                           依赖锁文件
 
 | 模型 | Hugging Face 下载入口 |
 |---|---|
-| 课程 SFT C | 待发布：账号创建后补充 |
-| RL450 | 待发布：账号创建后补充 |
+| 课程 SFT C | [Styl4/shopping-agent-rl-sft-2b](https://huggingface.co/Styl4/shopping-agent-rl-sft-2b) · 合并权重，约 4.45 GB |
+| RL450 | [Styl4/shopping-agent-rl-rl450-2b](https://huggingface.co/Styl4/shopping-agent-rl-rl450-2b) · 四卡 FSDP actor，约 5.56 GB |
 
-权重格式、基座依赖与发布状态见 [模型说明](docs/models.md)。
+SFT 可作为完整模型加载；RL450 发布的是原始 FSDP 检查点，需要 SFT C 基座和匹配的 veRL 加载流程，不能直接用 Transformers 的 from_pretrained 加载。固定版本下载方法见 [模型说明](docs/models.md)。
 
 ## 文档导航
 

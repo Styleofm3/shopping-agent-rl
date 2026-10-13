@@ -1,25 +1,25 @@
 {
   "schema_version": "shopping-model-downloads-v1",
   "hosting": "huggingface",
-  "status": "pending_account",
+  "status": "published",
   "models": [
     {
       "id": "sft-c",
       "suggested_repo_name": "shopping-agent-rl-sft-2b",
-      "repo_id": null,
-      "download_url": null,
-      "revision": null,
-      "status": "not_published",
+      "repo_id": "Styl4/shopping-agent-rl-sft-2b",
+      "download_url": "https://huggingface.co/Styl4/shopping-agent-rl-sft-2b",
+      "revision": "a0d32f6a38b67456774f74ae289a6e1882bbee8d",
+      "status": "published",
       "format": "huggingface-merged",
       "base_model": "Qwen/Qwen3.5-2B"
     },
     {
       "id": "rl450",
       "suggested_repo_name": "shopping-agent-rl-rl450-2b",
-      "repo_id": null,
-      "download_url": null,
-      "revision": null,
-      "status": "not_published",
+      "repo_id": "Styl4/shopping-agent-rl-rl450-2b",
+      "download_url": "https://huggingface.co/Styl4/shopping-agent-rl-rl450-2b",
+      "revision": "6c84dbfd088a8f62328090d6a6b99e04ad851ba3",
+      "status": "published",
       "format": "verl-fsdp-four-rank-actor",
       "requires_model": "sft-c"
     }
