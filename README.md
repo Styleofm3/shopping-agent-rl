@@ -38,13 +38,36 @@ Qwen3.5-2B · 三阶段课程 SFT · 在线 GRPO · Final200 Clean
 
 教师轨迹与基础模型进入课程 SFT，再通过在线 GRPO 优化策略；增强 Harness 支撑在线交互与评估。
 
-| 环节 | 本项目的工作 |
-|---|---|
-| 数据 | 教师轨迹整理、去重、课程划分和任务集隔离 |
-| SFT | 动作监督 LoRA 微调，按 A/B/C 三阶段累计训练 |
-| GRPO | 组内多轨迹采样，使用环境反馈更新策略 |
-| 执行框架 | 环境会话、动作检查、错误反馈与上下文管理 |
-| 评估 | 固定任务、保存终局证据、配对比较成功与失败 |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="200" align="center">环节</th>
+      <th width="1000" align="left">本项目的工作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">数据</td>
+      <td align="left">教师轨迹整理、去重、课程划分和任务集隔离</td>
+    </tr>
+    <tr>
+      <td align="center">SFT</td>
+      <td align="left">动作监督 LoRA 微调，按 A/B/C 三阶段累计训练</td>
+    </tr>
+    <tr>
+      <td align="center">GRPO</td>
+      <td align="left">组内多轨迹采样，使用环境反馈更新策略</td>
+    </tr>
+    <tr>
+      <td align="center">执行框架</td>
+      <td align="left">环境会话、动作检查、错误反馈与上下文管理</td>
+    </tr>
+    <tr>
+      <td align="center">评估</td>
+      <td align="left">固定任务、保存终局证据、配对比较成功与失败</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 训练数据如何组织？
 
@@ -52,11 +75,40 @@ Qwen3.5-2B · 三阶段课程 SFT · 在线 GRPO · Final200 Clean
 
 课程逐步扩展训练任务，同时保留前阶段内容。每阶段训练完成后合并 LoRA 参数，作为下一阶段的模型起点。
 
-| 阶段 | 课程范围 | 训练清单 | 验证清单 | 学习率 |
-|---|---|---:|---:|---:|
-| A | 基础执行 | 256 | 28 | 1e-4 |
-| B | 基础执行 + 约束核验 | 799 | 88 | 7e-5 |
-| C | 基础执行 + 约束核验 + 策略探索 | 1,073 | 119 | 5e-5 |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="110" align="center">阶段</th>
+      <th width="490" align="left">课程范围</th>
+      <th width="200" align="right">训练清单</th>
+      <th width="200" align="right">验证清单</th>
+      <th width="200" align="right">学习率</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">A</td>
+      <td align="left">基础执行</td>
+      <td align="right">256</td>
+      <td align="right">28</td>
+      <td align="right">1e-4</td>
+    </tr>
+    <tr>
+      <td align="center">B</td>
+      <td align="left">基础执行 + 约束核验</td>
+      <td align="right">799</td>
+      <td align="right">88</td>
+      <td align="right">7e-5</td>
+    </tr>
+    <tr>
+      <td align="center">C</td>
+      <td align="left">基础执行 + 约束核验 + 策略探索</td>
+      <td align="right">1,073</td>
+      <td align="right">119</td>
+      <td align="right">5e-5</td>
+    </tr>
+  </tbody>
+</table>
 
 各阶段为累计清单，不能把三行相加作为独立任务数。C 阶段预处理后的实际训练/验证样本数为 1,069/118。
 
@@ -66,18 +118,56 @@ SFT 使用动作监督：模型学习何时搜索、查看详情、选择规格�
 
 以 C 阶段合并模型为起点，针对同一需求采样多条交互轨迹，在组内比较结果好坏，再更新动作策略。
 
-| 设置 | 本项目实验配置 |
-|---|---|
-| 训练框架 | veRL，vLLM 生成 |
-| 训练方式 | LoRA，四卡 |
-| 每组采样数 | 4 |
-| 训练采样 | temperature 0.7，top_p 0.9 |
-| 学习率 | 1e-6 |
-| LoRA | rank 16，alpha 32 |
-| 策略裁剪 | 0.2 |
-| 优势计算 | GRPO 组内均值中心化，不按标准差归一化 |
-| KL 项 | 关闭 |
-| 本页展示检查点 | 第 450 个优化步骤 |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="290" align="left">设置</th>
+      <th width="910" align="left">本项目实验配置</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">训练框架</td>
+      <td align="left">veRL，vLLM 生成</td>
+    </tr>
+    <tr>
+      <td align="left">训练方式</td>
+      <td align="left">LoRA，四卡</td>
+    </tr>
+    <tr>
+      <td align="left">每组采样数</td>
+      <td align="left">4</td>
+    </tr>
+    <tr>
+      <td align="left">训练采样</td>
+      <td align="left">temperature 0.7，top_p 0.9</td>
+    </tr>
+    <tr>
+      <td align="left">学习率</td>
+      <td align="left">1e-6</td>
+    </tr>
+    <tr>
+      <td align="left">LoRA</td>
+      <td align="left">rank 16，alpha 32</td>
+    </tr>
+    <tr>
+      <td align="left">策略裁剪</td>
+      <td align="left">0.2</td>
+    </tr>
+    <tr>
+      <td align="left">优势计算</td>
+      <td align="left">GRPO 组内均值中心化，不按标准差归一化</td>
+    </tr>
+    <tr>
+      <td align="left">KL 项</td>
+      <td align="left">关闭</td>
+    </tr>
+    <tr>
+      <td align="left">本页展示检查点</td>
+      <td align="left">第 450 个优化步骤</td>
+    </tr>
+  </tbody>
+</table>
 
 训练信号来自 ShopSimulator 的确定性终局奖励，不需要额外的 LLM Judge 奖励模型。
 
@@ -93,15 +183,52 @@ SFT 使用动作监督：模型学习何时搜索、查看详情、选择规格�
 
 后训练优化模型的动作策略，执行框架负责把动作接入环境、返回有效反馈并管理交互状态。我们围绕购物任务中的预算违规、规格遗漏、页面操作错误和长轨迹信息积累，组织了以下增强：
 
-| 组件 | 实现内容 | 对应问题 |
-|---|---|---|
-| A · 核验提示 | 引导模型按搜索、证据收集、规格选择、购买核验组织动作 | 遗漏需求或缺少购买前核验 |
-| B · 购买前检查 | 对未选完规格、价格未知、明确数字预算违规的购买请求进行拦截 | 在执行条件不足时过早购买 |
-| C · 工具接口与错误恢复 | 保留精确规格标签，仅在空白差异可唯一匹配时修正参数，并提供当前页面的恢复反馈 | 标签匹配失败、无效点击后无法继续 |
-| D · 观察预算 | 将增强配置的观察预算设为 8,192 token，保留更多搜索结果与商品标题信息 | 搜索反馈被过早截断 |
-| E · 上下文管理 | 按完整交互组裁剪历史，同步维护 token 与训练掩码，并为生成预留空间 | 长轨迹超出上下文预算 |
-| F · 商品数据与索引一致性 | 配对维护核验后的商品字段与搜索索引 | 页面证据、商品数据与检索结果不一致 |
-| G · 购买与候选判定 | 根据需求证据复核购买约束和候选资格，保留原奖励供严格成功统计 | 环境判定与需求证据难以对应 |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="270" align="left">组件</th>
+      <th width="580" align="left">实现内容</th>
+      <th width="350" align="left">对应问题</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">A · 核验提示</td>
+      <td align="left">引导模型按搜索、证据收集、规格选择、购买核验组织动作</td>
+      <td align="left">遗漏需求或缺少购买前核验</td>
+    </tr>
+    <tr>
+      <td align="left">B · 购买前检查</td>
+      <td align="left">对未选完规格、价格未知、明确数字预算违规的购买请求进行拦截</td>
+      <td align="left">在执行条件不足时过早购买</td>
+    </tr>
+    <tr>
+      <td align="left">C · 工具接口与错误恢复</td>
+      <td align="left">保留精确规格标签，仅在空白差异可唯一匹配时修正参数，并提供当前页面的恢复反馈</td>
+      <td align="left">标签匹配失败、无效点击后无法继续</td>
+    </tr>
+    <tr>
+      <td align="left">D · 观察预算</td>
+      <td align="left">将增强配置的观察预算设为 8,192 token，保留更多搜索结果与商品标题信息</td>
+      <td align="left">搜索反馈被过早截断</td>
+    </tr>
+    <tr>
+      <td align="left">E · 上下文管理</td>
+      <td align="left">按完整交互组裁剪历史，同步维护 token 与训练掩码，并为生成预留空间</td>
+      <td align="left">长轨迹超出上下文预算</td>
+    </tr>
+    <tr>
+      <td align="left">F · 商品数据与索引一致性</td>
+      <td align="left">配对维护核验后的商品字段与搜索索引</td>
+      <td align="left">页面证据、商品数据与检索结果不一致</td>
+    </tr>
+    <tr>
+      <td align="left">G · 购买与候选判定</td>
+      <td align="left">根据需求证据复核购买约束和候选资格，保留原奖励供严格成功统计</td>
+      <td align="left">环境判定与需求证据难以对应</td>
+    </tr>
+  </tbody>
+</table>
 
 动作被拦截后，框架返回反馈，由模型决定下一步；预算与规格检查不替代模型对全部语义需求的判断。
 
@@ -109,16 +236,66 @@ SFT 使用动作监督：模型学习何时搜索、查看详情、选择规格�
 
 固定 C 阶段 SFT 模型、200 道任务、贪心解码及显式详情获取方式，逐项移除组件，观察执行结果变化。S 为增强配置参考组。
 
-| 配置 | 严格成功数 | 成功率 | 相对 S 变化 |
-|---|---:|---:|---:|
-| S：增强框架 | 130/200 | **65.0%** | — |
-| 移除 A：核验提示 | 126/200 | 63.0% | −2.0 个百分点 |
-| 移除 B：额外购买检查 | 123/200 | 61.5% | −3.5 个百分点 |
-| 移除 C：接口与恢复增强 | 120/200 | 60.0% | −5.0 个百分点 |
-| 移除 D：观察预算增强 | 124/200 | 62.0% | −3.0 个百分点 |
-| 移除 E：上下文管理增强 | 131/200 | 65.5% | +0.5 个百分点 |
-| 移除 F：商品数据与索引修复¹ | 128/200 | 64.0% | −1.0 个百分点 |
-| 移除 G：购买与候选判定增强 | 131/200 | 65.5% | +0.5 个百分点 |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="600" align="left">配置</th>
+      <th width="200" align="right">严格成功数</th>
+      <th width="160" align="right">成功率</th>
+      <th width="240" align="right">相对 S 变化</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">S：增强框架</td>
+      <td align="right">130/200</td>
+      <td align="right"><strong>65.0%</strong></td>
+      <td align="right">—</td>
+    </tr>
+    <tr>
+      <td align="left">移除 A：核验提示</td>
+      <td align="right">126/200</td>
+      <td align="right">63.0%</td>
+      <td align="right">−2.0 个百分点</td>
+    </tr>
+    <tr>
+      <td align="left">移除 B：额外购买检查</td>
+      <td align="right">123/200</td>
+      <td align="right">61.5%</td>
+      <td align="right">−3.5 个百分点</td>
+    </tr>
+    <tr>
+      <td align="left">移除 C：接口与恢复增强</td>
+      <td align="right">120/200</td>
+      <td align="right">60.0%</td>
+      <td align="right">−5.0 个百分点</td>
+    </tr>
+    <tr>
+      <td align="left">移除 D：观察预算增强</td>
+      <td align="right">124/200</td>
+      <td align="right">62.0%</td>
+      <td align="right">−3.0 个百分点</td>
+    </tr>
+    <tr>
+      <td align="left">移除 E：上下文管理增强</td>
+      <td align="right">131/200</td>
+      <td align="right">65.5%</td>
+      <td align="right">+0.5 个百分点</td>
+    </tr>
+    <tr>
+      <td align="left">移除 F：商品数据与索引修复¹</td>
+      <td align="right">128/200</td>
+      <td align="right">64.0%</td>
+      <td align="right">−1.0 个百分点</td>
+    </tr>
+    <tr>
+      <td align="left">移除 G：购买与候选判定增强</td>
+      <td align="right">131/200</td>
+      <td align="right">65.5%</td>
+      <td align="right">+0.5 个百分点</td>
+    </tr>
+  </tbody>
+</table>
 
 购买检查的作用在失败类型上也有体现：移除 B 后，错误购买从 **10 题增加到 21 题**，重复循环从 13 题降到 8 题，呈现购买约束与继续探索之间的取舍。当前实验中，移除 E、G 未降低成功率，尚未观察到这两项的成功率净收益。
 
@@ -126,35 +303,107 @@ SFT 使用动作监督：模型学习何时搜索、查看详情、选择规格�
 
 ## 完整评估流水线
 
+评估由 **代码硬检查 → 双 Judge → 固定分母汇总** 组成。代码负责可确定的执行指标，两个 Judge 分别整理评分标准、评价交互轨迹。
+
 ![双 Judge 与独立指标面板](assets/evaluation-pipeline.png)
 
-正式评估由“代码硬检查 + 两个 LLM-as-Judge + 固定分母聚合”组成。两个 Judge 职责不同：
-DeepSeek V4 Flash 是 Rubric Curator。 代码先根据每道题的 Query 和私有 TaskFacts 提取品类、品牌、型号、功能、规格和价格候选；Flash 只能从候选中选择 用户真正要求的约束、去重并标注 hard/soft，不能创造新的字段或期望值。生成的 Rubric 冻结一次，由 Baseline、SFT 和 GRPO 共用。
-DeepSeek V4 Pro 是 Trajectory Judge。 它读取用户 Query、冻结 Rubric、 Actor 实际看到的完整轨迹、中性终局状态和白名单代码指标，逐条判断需求是否满足， 并从搜索策略、候选利用、证据核验、决策质量、终止效率五个维度分别打 0/1/2 分。
-这里的 Rubric 是逐任务评分标准，不是向量检索式 RAG。
+> **结果口径**：下文的 **65% / 69%** 是 Reward 严格成功率。图中展示完整评估框架，不代表这组实验已完成双 Judge 评分。Reward、需求满足、轨迹质量和执行指标分开报告，不合成总分。
 
-Reward、需求满足、轨迹质量与确定性执行指标分别报告，不合成总分。下文 65%/69% 属于 Reward 严格成功率；图示描述完整评估框架，不代表这组实验已完成双 Judge 评分。
+### 两个 Judge 如何分工？
 
+**1. DeepSeek V4 Flash：整理并冻结 Rubric**
 
-以 Final-200 中的 task_id=8187 为例，Query 要求“一对卡通-永结同心款的高档 酒红色木梳、礼盒、陪嫁、20 元左右”。代码生成 7 条候选，V4 Flash 冻结为 5 条 Rubric；SFT Actor 用 10 步完成搜索、详情核验、规格选择和购买；V4 Pro 最终给出 搜索策略 2 / 候选利用 1 / 证据核验 1 / 决策质量 2 / 终止效率 2，并为每项判断 引用真实的 event_id。
+- 代码根据每题的 Query 和私有 TaskFacts，提取品类、品牌、型号、功能、规格及价格候选。
+- Flash 从候选中筛选用户真正要求的约束、去重，并标注 hard / soft；不能新增字段或期望值。
+- 每题 Rubric 只冻结一次，由 Baseline、SFT 和 GRPO 共用。这里的 Rubric 指逐任务评分标准。
 
-Pro 看不到 Reward 分数、Gold 商品私有字段、raw Observation、成功标签或其他模型 结果，因此不能根据答案倒推轨迹质量。最终结果分为四个独立面板：
+**2. DeepSeek V4 Pro：评价 Actor 轨迹**
 
-1.Environment Reward 与终局；
-2.Query Rubric 的 hard/soft 满足情况和 Reward disagreement；
-3.Pro Judge 五维分布与错误类型；
-4.步数、工具、Guard、重复、上下文和基础设施指标。
-四部分不会合成一个总分。缺失、报错和 not_judged 任务仍保留在 Final-200 Clean 分母中。 完整数据流、两个模型的完整 Prompt、输入隔离规则、示例 Rubric 和最终统计口径见 评估流水线文档。当前集的筛选依据见 Final-200 Clean 说明；
+- 输入包括用户 Query、冻结 Rubric、Actor 实际可见的完整轨迹、中性终局状态和白名单代码指标。
+- 逐条判断需求是否满足，并对 **搜索策略、候选利用、证据核验、决策质量、终止效率** 分别给出 0 / 1 / 2 分。
+- 每项判断引用真实的 `event_id`，便于回查轨迹证据。
+
+**输入隔离**：Pro 不接收 Reward 分数、Gold 商品私有字段、raw Observation、成功标签或其他模型结果，避免利用答案倒推轨迹质量。
+
+### 一道任务如何经过评估？
+
+以 Final-200 的 `task_id=8187` 为例，用户需求为：
+
+> 一对卡通“永结同心”款的高档酒红色木梳，礼盒、陪嫁，20 元左右。
+
+1. **提取候选**：代码生成 7 条候选，Flash 整理为 5 条冻结 Rubric。
+2. **执行任务**：SFT Actor 用 10 步完成搜索、详情核验、规格选择和购买。
+3. **评价轨迹**：Pro 按五个维度给出 **2 / 1 / 1 / 2 / 2**，并逐项引用轨迹中的 `event_id`。
+
+### 四个独立结果面板
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="360" align="left">面板</th>
+      <th width="840" align="left">报告内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">Reward 与终局</td>
+      <td align="left">Environment Reward、严格成功率及终止状态</td>
+    </tr>
+    <tr>
+      <td align="left">Query Rubric</td>
+      <td align="left">hard / soft 需求满足情况，以及与 Reward 判定的分歧</td>
+    </tr>
+    <tr>
+      <td align="left">Trajectory 轨迹质量</td>
+      <td align="left">Pro Judge 五维评分分布与错误类型</td>
+    </tr>
+    <tr>
+      <td align="left">Deterministic 执行指标</td>
+      <td align="left">步数、工具调用、Guard、重复、上下文和基础设施指标</td>
+    </tr>
+  </tbody>
+</table>
+
+所有面板保留 Final-200 Clean 的固定分母，缺失、报错和 `not_judged` 任务不从分母中删除。
+
+相关口径见 [评估说明](docs/evaluation.md)，任务集与数据组织见 [数据说明](docs/data.md)。
+
 ## 实验结果
 
 ### 固定 200 题，贪心解码
 
 两组均采用 temperature=0、top_p=1，每题一次，最多 35 个执行步骤，商品详情通过显式工具获取。
 
-| 模型与执行配置 | 严格成功数 | 严格成功率 | 动作守卫拒绝次数 | 涉及拒绝的任务数 | 环境异常 |
-|---|---:|---:|---:|---:|---:|
-| 课程 SFT（C）+ 增强框架 | 130/200 | 65.0% | 94 | 56 | 0 |
-| RL450 + 增强框架（含搜索并发修复） | 138/200 | 69.0% | 65 | 39 | 0 |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="480" align="left">模型与执行配置</th>
+      <th width="150" align="right">严格成功数</th>
+      <th width="150" align="right">严格成功率</th>
+      <th width="150" align="right">动作守卫拒绝次数</th>
+      <th width="150" align="right">涉及拒绝的任务数</th>
+      <th width="120" align="right">环境异常</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">课程 SFT（C）+ 增强框架</td>
+      <td align="right">130/200</td>
+      <td align="right">65.0%</td>
+      <td align="right">94</td>
+      <td align="right">56</td>
+      <td align="right">0</td>
+    </tr>
+    <tr>
+      <td align="left">RL450 + 增强框架（含搜索并发修复）</td>
+      <td align="right">138/200</td>
+      <td align="right">69.0%</td>
+      <td align="right">65</td>
+      <td align="right">39</td>
+      <td align="right">0</td>
+    </tr>
+  </tbody>
+</table>
 
 - 严格成功率相差 **4 个百分点**；逐题比较新增成功 17 题、丢失成功 9 题，净增加 8 题。
 - 动作守卫拒绝次数减少 **30.9%**。这一指标统计执行前被规则拦截的动作，不能解释为错误购买率下降。
@@ -259,14 +508,47 @@ uv.lock                           依赖锁文件
 
 ## 常用训练配置
 
-| 参数 | 作用 | 本项目设置 |
-|---|---|---|
-| `--curriculum-stage` | 单阶段 SFT 课程选择 | a / b / c |
-| `--max-length` | SFT 最大序列长度 | 24,576 |
-| `--lora-r` / `--lora-alpha` | SFT 低秩适配参数 | 16 / 32 |
-| `actor_rollout_ref.rollout.n` | GRPO 每个输入的采样数 | 4 |
-| `actor_rollout_ref.actor.optim.lr` | RL 学习率 | 1e-6 |
-| `trainer.n_gpus_per_node` | 单节点使用的 GPU 数 | 4 |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="480" align="left">参数</th>
+      <th width="460" align="left">作用</th>
+      <th width="260" align="center">本项目设置</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left"><code>--curriculum-stage</code></td>
+      <td align="left">单阶段 SFT 课程选择</td>
+      <td align="center">a / b / c</td>
+    </tr>
+    <tr>
+      <td align="left"><code>--max-length</code></td>
+      <td align="left">SFT 最大序列长度</td>
+      <td align="center">24,576</td>
+    </tr>
+    <tr>
+      <td align="left"><code>--lora-r</code> / <code>--lora-alpha</code></td>
+      <td align="left">SFT 低秩适配参数</td>
+      <td align="center">16 / 32</td>
+    </tr>
+    <tr>
+      <td align="left"><code>actor_rollout_ref.rollout.n</code></td>
+      <td align="left">GRPO 每个输入的采样数</td>
+      <td align="center">4</td>
+    </tr>
+    <tr>
+      <td align="left"><code>actor_rollout_ref.actor.optim.lr</code></td>
+      <td align="left">RL 学习率</td>
+      <td align="center">1e-6</td>
+    </tr>
+    <tr>
+      <td align="left"><code>trainer.n_gpus_per_node</code></td>
+      <td align="left">单节点使用的 GPU 数</td>
+      <td align="center">4</td>
+    </tr>
+  </tbody>
+</table>
 
 训练配置以对应实验记录为准，启动参数可以覆盖默认配置。
 
@@ -287,10 +569,24 @@ uv.lock                           依赖锁文件
 
 ## 模型下载
 
-| 模型 | Hugging Face 下载入口 |
-|---|---|
-| 课程 SFT C | [Styl4/shopping-agent-rl-sft-2b](https://huggingface.co/Styl4/shopping-agent-rl-sft-2b) · 合并权重，约 4.45 GB |
-| RL450 | [Styl4/shopping-agent-rl-rl450-2b](https://huggingface.co/Styl4/shopping-agent-rl-rl450-2b) · 四卡 FSDP actor，约 5.56 GB |
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" align="left">模型</th>
+      <th width="960" align="left">Hugging Face 下载入口</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">课程 SFT C</td>
+      <td align="left"><a href="https://huggingface.co/Styl4/shopping-agent-rl-sft-2b">Styl4/shopping-agent-rl-sft-2b</a> · 合并权重，约 4.45 GB</td>
+    </tr>
+    <tr>
+      <td align="left">RL450</td>
+      <td align="left"><a href="https://huggingface.co/Styl4/shopping-agent-rl-rl450-2b">Styl4/shopping-agent-rl-rl450-2b</a> · 四卡 FSDP actor，约 5.56 GB</td>
+    </tr>
+  </tbody>
+</table>
 
 SFT 可作为完整模型加载；RL450 发布的是原始 FSDP 检查点，需要 SFT C 基座和匹配的 veRL 加载流程，不能直接用 Transformers 的 from_pretrained 加载。固定版本下载方法见 [模型说明](docs/models.md)。
 
