@@ -29,7 +29,6 @@ Qwen3.5-2B · 三阶段课程 SFT · 在线 GRPO · Final200 Clean
 
 ![ShopSimulator 原始环境与购物交互示例](assets/shopsimulator-overview.png)
 
-*图：ShopSimulator 环境示意，展示用户需求、模型动作、环境反馈与奖励之间的关系。图中的用户画像与澄清对话属于原始环境示例；本项目的评估设置见 [评估说明](docs/evaluation.md)。*
 
 ## 项目流程
 
