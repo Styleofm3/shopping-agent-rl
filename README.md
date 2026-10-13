@@ -1,5 +1,7 @@
 # Shopping Agent RL
 
+[![Python 3.10+](https://img.shields.io/static/v1?label=Python&message=3.10%2B&color=3776AB&style=flat&logo=python&logoColor=white)](pyproject.toml) [![Post-training: LoRA SFT + GRPO](https://img.shields.io/static/v1?label=Post-training&message=LoRA+SFT+%2B+GRPO&color=8067F0&style=flat)](#项目流程) [![veRL 0.8.0](https://img.shields.io/static/v1?label=veRL&message=0.8.0&color=218C36&style=flat)](pyproject.toml) [![Environment: ShopSimulator](https://img.shields.io/static/v1?label=Environment&message=ShopSimulator&color=517CA4&style=flat)](#任务与环境) [![Benchmark: Final-200-Clean](https://img.shields.io/static/v1?label=Benchmark&message=Final-200-Clean&color=E49B0F&style=flat)](#实验结果) [![License: MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=287AA8&style=flat)](LICENSE)
+
 **中文购物任务中的小模型策略后训练与评估**
 
 Qwen3.5-2B · 三阶段课程 SFT · 在线 GRPO · Final200 Clean
