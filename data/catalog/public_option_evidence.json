@@ -1,0 +1,124 @@
+{
+  "version": "public-option-evidence-v1",
+  "records": [
+    {
+      "asin": "788067596051",
+      "axis": "颜色分类",
+      "option_value": "100074690",
+      "source_url": "https://img.alicdn.com/imgextra/i2/690444147/O1CN01m9qsGR1gVNRNVzkq6_!!690444147.jpg",
+      "caption": "图片可见黑色覆盖片、紫色织物、绿色点缀、白色鞋底。",
+      "facts": {
+        "visible_color_families": [
+          "黑",
+          "紫",
+          "绿",
+          "白"
+        ]
+      },
+      "review_method": "assistant_visual_inspection_of_bound_public_option_image_in_browser",
+      "reviewed_at": "2026-09-25T10:47:01.157632+08:00",
+      "limitation": "Image appearance is not physical certification; no color shade equivalence inferred. Original image bytes not archived.",
+      "independently_rechecked_at": "2026-09-25T12:48:05.158290+08:00"
+    },
+    {
+      "asin": "788067596051",
+      "axis": "颜色分类",
+      "option_value": "100074689",
+      "source_url": "https://img.alicdn.com/imgextra/i3/690444147/O1CN01CE2eR91gVNRKosPBT_!!690444147.jpg",
+      "caption": "图片可见白色覆盖片、黑色织物、蓝色点缀、白色鞋底；不能仅凭图片确认蓝色属于深蓝。",
+      "facts": {
+        "visible_color_families": [
+          "白",
+          "黑",
+          "蓝"
+        ]
+      },
+      "review_method": "assistant_visual_inspection_of_bound_public_option_image_in_browser",
+      "reviewed_at": "2026-09-25T10:47:01.157648+08:00",
+      "limitation": "Image appearance is not physical certification; no color shade equivalence inferred. Original image bytes not archived.",
+      "independently_rechecked_at": "2026-09-25T12:48:05.158290+08:00"
+    },
+    {
+      "asin": "817948252002",
+      "axis": "颜色分类",
+      "option_value": "VS169 B 蓝色",
+      "source_url": "https://img.alicdn.com/imgextra/i2/2545225569/O1CN01k8p1gb1r0efDZynTB_!!2545225569.jpg",
+      "caption": "图片可见浅蓝色鞋面与白色覆盖片/鞋底，另有红色标志。",
+      "facts": {
+        "visible_color_families": [
+          "蓝",
+          "白",
+          "红"
+        ]
+      },
+      "review_method": "assistant_visual_inspection_of_bound_public_option_image_in_browser",
+      "reviewed_at": "2026-09-25T10:47:01.157653+08:00",
+      "limitation": "Image appearance is not physical certification; no color shade equivalence inferred. Original image bytes not archived.",
+      "independently_rechecked_at": "2026-09-25T12:48:05.158290+08:00"
+    },
+    {
+      "asin": "823217094971",
+      "axis": "颜色分类",
+      "option_value": "风铃蔓-双层纱布一体奶油色",
+      "source_url": "https://img.alicdn.com/imgextra/i4/2911349586/O1CN01UGrxwn2KgRfNAtlie_!!2911349586.jpg",
+      "caption": "图片文字：双层—奶油色；遮光度95%。",
+      "facts": {
+        "image_text": [
+          "双层—奶油色",
+          "遮光度95%"
+        ],
+        "blackout_percent": 95
+      },
+      "review_method": "assistant_visual_inspection_of_bound_public_option_image_in_browser",
+      "reviewed_at": "2026-09-25T10:47:01.157659+08:00",
+      "limitation": "Image appearance is not physical certification; no color shade equivalence inferred. Original image bytes not archived.",
+      "independently_rechecked_at": "2026-09-25T12:48:05.158290+08:00"
+    },
+    {
+      "asin": "693637966247",
+      "axis": "颜色分类",
+      "option_value": "汤锅",
+      "source_url": "https://img.alicdn.com/imgextra/i2/124032198/O1CN011HiL0g1S6jLmO7J7i_!!124032198.jpg",
+      "caption": "规格图片文字为“图片上有的全部发货”“可折叠汤锅车”；图中可见带轮车架、汤锅和金属盘/筒等配件。",
+      "facts": {
+        "image_text": [
+          "图片上有的全部发货",
+          "可折叠汤锅车"
+        ],
+        "included_components": [
+          "车架",
+          "汤锅",
+          "配件"
+        ],
+        "shipment_scope_explicit": true
+      },
+      "review_method": "assistant_visual_inspection_of_bound_public_option_image_in_browser",
+      "reviewed_at": "2026-09-25T12:48:05.158290+08:00",
+      "limitation": "Public seller image claims, not physical certification. Original image bytes not archived."
+    },
+    {
+      "asin": "933500722656",
+      "axis": "颜色分类",
+      "option_value": "【单NVME】10Gbps配USB数据线",
+      "source_url": "https://img.alicdn.com/imgextra/i1/2632500403/O1CN01ohjfp91EqcfwWbjce_!!2632500403.jpg",
+      "caption": "规格图片文字为“单协议 NVMe”“理论速率10Gbps”“送 USB-A to C配线 (20cm)”。",
+      "facts": {
+        "image_text": [
+          "单协议 NVMe",
+          "理论速率10Gbps",
+          "送 USB-A to C配线 (20cm)"
+        ],
+        "exclusive_storage_protocols": [
+          "nvme"
+        ],
+        "included_cable_connectors": [
+          "usb-a",
+          "usb-c"
+        ]
+      },
+      "review_method": "assistant_visual_inspection_of_bound_public_option_image_in_browser",
+      "reviewed_at": "2026-09-25T12:48:05.158290+08:00",
+      "limitation": "Public seller image claims, not physical certification. Original image bytes not archived."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "protocol": {
+    "tasks": 200,
+    "temperature": 0,
+    "top_p": 1,
+    "max_steps": 35,
+    "automatic_details": false,
+    "success": "done + over + purchase + original Reward v3 gold_purchase + reward_valid + no infrastructure_invalid",
+    "version_note": "RL450 additionally uses serialized search; not an isolated RL treatment."
+  },
+  "models": {
+    "sft": {
+      "sha256": "547cb7d646e5aaf0ebe57a5fcfecc45c6560abfbf0969fd331e2d407bbe05f30",
+      "tasks": 200,
+      "strict_success": 130,
+      "guard_rejections": 94,
+      "guard_affected_tasks": 56,
+      "infrastructure_invalid": 0
+    },
+    "rl450": {
+      "sha256": "f129a7e6017f44572bd5ca92563fa80ecfda94fc23b0074dcc5223d1d1783e97",
+      "tasks": 200,
+      "strict_success": 138,
+      "guard_rejections": 65,
+      "guard_affected_tasks": 39,
+      "infrastructure_invalid": 0
+    }
+  },
+  "paired": {
+    "new_success": 17,
+    "lost_success": 9
+  },
+  "rl450_sampling5": {
+    "attempts": 1000,
+    "successes": 682,
+    "single_attempt_rate": 0.682,
+    "at_least_once_tasks": 174,
+    "tasks": 200,
+    "temperature": 0.7,
+    "top_p": 0.9
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "shopping-model-downloads-v1",
+  "hosting": "huggingface",
+  "status": "pending_account",
+  "models": [
+    {
+      "id": "sft-c",
+      "suggested_repo_name": "shopping-agent-rl-sft-2b",
+      "repo_id": null,
+      "download_url": null,
+      "revision": null,
+      "status": "not_published",
+      "format": "huggingface-merged",
+      "base_model": "Qwen/Qwen3.5-2B"
+    },
+    {
+      "id": "rl450",
+      "suggested_repo_name": "shopping-agent-rl-rl450-2b",
+      "repo_id": null,
+      "download_url": null,
+      "revision": null,
+      "status": "not_published",
+      "format": "verl-fsdp-four-rank-actor",
+      "requires_model": "sft-c"
+    }
+  ]
+}

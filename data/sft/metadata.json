@@ -1,0 +1,15 @@
+{
+  "source": "data/sft_pure_v4/all.jsonl",
+  "split_source": "data/sft_curriculum/manifest.json",
+  "purpose": "C-stage split for generic single-stage entrypoints; primary recipe is A/B/C curriculum",
+  "splits": {
+    "train": {
+      "tasks": 1073,
+      "sha256": "015ab098a5ad72392f0d96ee00869f7acf0f1bd023149cd003799ca71ce15761"
+    },
+    "validation": {
+      "tasks": 119,
+      "sha256": "6b4ed39662b2da19d7cc48e483d0f502cbd5a12c8345cda8bf3c0cdae7d48465"
+    }
+  }
+}

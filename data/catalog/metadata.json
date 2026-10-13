@@ -1,0 +1,10 @@
+{
+  "reviewed_products": {
+    "file": "reviewed-products.json.gz",
+    "uncompressed_sha256": "9ad03b7dddef2e92f99227bbf0a17439e7eabd21722f10153cd0516e49f0702e"
+  },
+  "option_evidence": {
+    "file": "public_option_evidence.json",
+    "sha256": "6ae0942792ab51843fe61915742ec02f82e994c6feb1a7f740d191962963bdb1"
+  }
+}
