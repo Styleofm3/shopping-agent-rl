@@ -370,19 +370,21 @@ SFT 使用动作监督：模型学习何时搜索、查看详情、选择规格�
 
 ## 实验结果
 
-### 固定 200 题，贪心解码
+### Final200 结果与验证集试跑效率
 
-两组均采用 temperature=0、top_p=1，每题一次，最多 35 个执行步骤，商品详情通过显式工具获取。
+Final200 的课程 SFT（C）和 RL450 两组均采用 temperature=0、top_p=1，每题一次，最多 35 个执行步骤，商品详情通过显式工具获取。GPT 两组的 Final200 尚未评测；效率试跑使用相同的增强框架与提示词，GPT 使用服务默认生成设置。
 
 <table width="100%">
   <thead>
     <tr>
-      <th width="480" align="left">模型与执行配置</th>
-      <th width="150" align="right">严格成功数</th>
-      <th width="150" align="right">严格成功率</th>
-      <th width="150" align="right">动作守卫拒绝次数</th>
-      <th width="150" align="right">涉及拒绝的任务数</th>
-      <th width="120" align="right">环境异常</th>
+      <th align="left">模型与执行配置</th>
+      <th align="right">Final200 严格成功数</th>
+      <th align="right">Final200 严格成功率</th>
+      <th align="right">平均生成 tokens*</th>
+      <th align="right">平均轨迹耗时*</th>
+      <th align="right">动作守卫拒绝次数</th>
+      <th align="right">涉及拒绝的任务数</th>
+      <th align="right">环境异常</th>
     </tr>
   </thead>
   <tbody>
@@ -390,6 +392,8 @@ SFT 使用动作监督：模型学习何时搜索、查看详情、选择规格�
       <td align="left">课程 SFT（C）+ 增强框架</td>
       <td align="right">130/200</td>
       <td align="right">65.0%</td>
+      <td align="right">—</td>
+      <td align="right">—</td>
       <td align="right">94</td>
       <td align="right">56</td>
       <td align="right">0</td>
@@ -398,14 +402,38 @@ SFT 使用动作监督：模型学习何时搜索、查看详情、选择规格�
       <td align="left">RL450 + 增强框架（含搜索并发修复）</td>
       <td align="right">138/200</td>
       <td align="right">69.0%</td>
+      <td align="right">589.96</td>
+      <td align="right">19.63 秒</td>
       <td align="right">65</td>
       <td align="right">39</td>
       <td align="right">0</td>
     </tr>
+    <tr>
+      <td align="left">GPT-6.1-Sol + 增强框架</td>
+      <td align="right">未评测</td>
+      <td align="right">未评测</td>
+      <td align="right">222.09</td>
+      <td align="right">57.74 秒</td>
+      <td align="right">—</td>
+      <td align="right">—</td>
+      <td align="right">—</td>
+    </tr>
+    <tr>
+      <td align="left">GPT-6-Astra + 增强框架</td>
+      <td align="right">未评测</td>
+      <td align="right">未评测</td>
+      <td align="right">183.98</td>
+      <td align="right">52.32 秒</td>
+      <td align="right">—</td>
+      <td align="right">—</td>
+      <td align="right">—</td>
+    </tr>
   </tbody>
 </table>
 
-- 严格成功率相差 **4 个百分点**；逐题比较新增成功 17 题、丢失成功 9 题，净增加 8 题。
+*效率列来自验证集同题试跑，三组同时剔除 302、4128、16252 三条 RL450 长输出失败任务，属于事后敏感性分析，不是 Final200 效率结果。GPT 耗时包含网络、代理和服务排队；不同模型 tokenizer 不同，不能直接据此推算金额成本。守卫与异常三列保留原 Final200 数据；“—”表示此处未列出数据。
+
+- Final200 中，RL450 相比课程 SFT（C）的严格成功率高 **4 个百分点**；逐题比较新增成功 17 题、丢失成功 9 题，净增加 8 题。
 - 动作守卫拒绝次数减少 **30.9%**。这一指标统计执行前被规则拦截的动作，不能解释为错误购买率下降。
 - 两组错误购买均为 10 题。
 
