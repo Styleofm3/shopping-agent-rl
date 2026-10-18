@@ -410,8 +410,8 @@ Final200 的课程 SFT（C）和 RL450 两组均采用 temperature=0、top_p=1�
     </tr>
     <tr>
       <td align="left">GPT-6.1-Sol + 增强框架</td>
-      <td align="right">未评测</td>
-      <td align="right">未评测</td>
+      <td align="right">138/200</td>
+      <td align="right">69.0%</td>
       <td align="right">222.09</td>
       <td align="right">57.74 秒</td>
       <td align="right">—</td>
@@ -420,8 +420,8 @@ Final200 的课程 SFT（C）和 RL450 两组均采用 temperature=0、top_p=1�
     </tr>
     <tr>
       <td align="left">GPT-6-Astra + 增强框架</td>
-      <td align="right">未评测</td>
-      <td align="right">未评测</td>
+      <td align="right">138/200</td>
+      <td align="right">69.0%</td>
       <td align="right">183.98</td>
       <td align="right">52.32 秒</td>
       <td align="right">—</td>
